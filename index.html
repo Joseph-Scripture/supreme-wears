@@ -4,10 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel ='stylesheet' href='styles/index.css'>
     <title>Supreme Wears</title>
 </head>
+<!-- sticky top-0 z-50 -->
 <body class="bg-gray-50 font-sans antialiased text-slate-900">
-    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md">
+    <header class="bg-white/80 backdrop-blur-md">
         <nav class="flex flex-col mx-4 my-3 lg:mx-8 bg-white rounded-2xl shadow-sm border border-gray-200/80 transition-all duration-300">
             
             <div class="flex justify-between items-center px-6 py-3">
@@ -82,7 +84,6 @@
 
             </div>
 
-            <!-- Mobile Dropdown Menu Container (Hidden by default) -->
             <div id="mobile-menu" class="hidden lg:hidden border-t border-gray-100 px-6 py-4 flex-col gap-4">
                 
                 <!-- Mobile Search Field -->
@@ -117,6 +118,45 @@
         </nav>
     </header>
 
+    <main class="relative">
+    <!-- Hero Slider Container -->
+        <div id="hero-slider" class="relative w-full h-[600px] overflow-hidden bg-slate-900">
+            
+            <!-- Slides Wrapper (Dynamic Content Inside) -->
+            <div id="slides-container" class="relative w-full h-full">
+            </div>
+
+            <div class="absolute inset-0 flex items-center justify-between px-6 z-20">
+                <!-- Previous Button -->
+                <button id="prev-slide" aria-label="Previous Slide" class="p-2.5 rounded-full bg-white/20 text-white hover:bg-white/40 transition-all active:scale-95 group focus:outline-none focus:ring-2 focus:ring-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-6 group-hover:-translate-x-0.5 transition-transform">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                    </svg>
+                </button>
+                
+                <!-- Next Button -->
+                <button id="next-slide" aria-label="Next Slide" class="p-2.5 rounded-full bg-white/20 text-white hover:bg-white/40 transition-all active:scale-95 group focus:outline-none focus:ring-2 focus:ring-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-6 group-hover:translate-x-0.5 transition-transform">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                    </svg>
+                </button>
+            </div>
+
+            <div class="absolute bottom-8 left-0 right-0 z-20 flex justify-center gap-3">
+                <div id="pagination-dots" class="flex gap-2.5 px-4 py-2 bg-slate-900/40 rounded-full backdrop-blur-sm">
+                </div>
+            </div>
+
+        </div>
+    </main>
+<!-- Featured Products -->
+    <section class="max-w-7xl mx-auto px-4 py-12">
+        <h2 class="text-2xl font-bold text-slate-900 mb-6">Featured Products</h2>
+
+        <div id="featured-products" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <p class="text-slate-500 col-span-full">Loading products...</p>
+        </div>
+    </section>
     <script src="scripts/index.js">
 
     </script>
