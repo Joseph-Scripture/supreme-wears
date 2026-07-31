@@ -60,9 +60,6 @@ if (menuBtn) {
     });
 }
 
-/* ==========================================================================
-   4. HERO SLIDER MODULE
-   ========================================================================== */
 function initSlider() {
     if (!slidesContainer || !dotsContainer) return;
 
@@ -207,38 +204,41 @@ function renderProducts(products, container) {
             imageUrl = imageUrl.replace(/^\["|"\]$/g, '');
         }
 
-        return `
-            <div class="bg-white rounded-2xl p-4 border border-gray-200 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
-                <div>
-                    <div class="aspect-square bg-gray-100 rounded-xl mb-4 overflow-hidden">
-                        <img 
-                            src="${imageUrl}" 
-                            alt="${product.title}" 
-                            class="w-full h-full object-cover product_image"
-                            loading="lazy"
-                        >
-                    </div>
-                    <h3 class="font-semibold text-slate-900 product_title line-clamp-1" title="${product.title}">
-                        ${product.title}
-                    </h3>
-                    <p class="text-slate-500 text-sm mb-3 product_description">
-                        ${product.category ? product.category.name : 'General'}
-                    </p>
-                </div>
+        // Wrap the image and title in an anchor tag pointing to product-detail.html
+return `
+    <div class="bg-white rounded-2xl p-4 border border-gray-200 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
+        <div>
+            <a href="pages/product-detail.html?id=${product.id}" class="block aspect-square bg-gray-100 rounded-xl mb-4 overflow-hidden group">
+                <img 
+                    src="${imageUrl}" 
+                    alt="${product.title}" 
+                    class="w-full h-full object-cover product_image group-hover:scale-105 transition-transform duration-300"
+                    loading="lazy"
+                >
+            </a>
+            <a href="pages/product-detail.html?id=${product.id}">
+                <h3 class="font-semibold text-slate-900 hover:text-blue-600 transition-colors product_title line-clamp-1" title="${product.title}">
+                    ${product.title}
+                </h3>
+            </a>
+            <p class="text-slate-500 text-sm mb-3 product_description">
+                ${product.category ? product.category.name : 'General'}
+            </p>
+        </div>
 
-                <div class="flex items-center justify-between mt-2">
-                    <span class="text-lg font-bold text-slate-900 product_price">
-                        $${product.price}
-                    </span>
-                    <button 
-                        data-id="${product.id}"
-                        class="add-to-cart-btn bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold px-3 py-1.5 rounded-full transition-colors active:scale-95"
-                    >
-                        Add to Cart
-                    </button>
-                </div>
-            </div>
-        `;
+        <div class="flex items-center justify-between mt-2">
+            <span class="text-lg font-bold text-slate-900 product_price">
+                $${product.price}
+            </span>
+            <button 
+                data-id="${product.id}"
+                class="add-to-cart-btn bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold px-3 py-1.5 rounded-full transition-colors active:scale-95"
+            >
+                Add to Cart
+            </button>
+        </div>
+    </div>
+    `;
     }).join('');
 
     container.innerHTML = productCardsHTML;
