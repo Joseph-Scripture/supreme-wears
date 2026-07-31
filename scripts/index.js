@@ -1,25 +1,11 @@
-const menuBtn = document.getElementById('menu-btn');
-const mobileMenu = document.getElementById('mobile-menu');
-const hamburgerIcon = document.getElementById('hamburger-icon');
-const closeIcon = document.getElementById('close-icon');
 
-menuBtn.addEventListener('click', () => {
-    const isMenuOpen = !mobileMenu.classList.contains('hidden');
+const APIURL = 'https://api.escuelajs.co/api/v1/products';
+const CATEGORIES_URL = 'https://api.escuelajs.co/api/v1/categories';
 
-    if (isMenuOpen) {
-        // Close Menu
-        mobileMenu.classList.add('hidden');
-        mobileMenu.classList.remove('flex');
-        hamburgerIcon.classList.remove('hidden');
-        closeIcon.classList.add('hidden');
-    } else {
-        // Open Menu
-        mobileMenu.classList.remove('hidden');
-        mobileMenu.classList.add('flex');
-        hamburgerIcon.classList.add('hidden');
-        closeIcon.classList.remove('hidden');
-    }
-});
+// Global Trackers
+let selectedCategoryId = null;
+let currentIndex = 0;
+let slideInterval;
 
 const slideData = [
     {
@@ -42,38 +28,54 @@ const slideData = [
     }
 ];
 
-// STATE: Current Active Slide Index
-let currentIndex = 0;
-let slideInterval; 
 
+// Navigation
+const menuBtn = document.getElementById('menu-btn');
+const mobileMenu = document.getElementById('mobile-menu');
+const hamburgerIcon = document.getElementById('hamburger-icon');
+const closeIcon = document.getElementById('close-icon');
+
+// Slider
 const slidesContainer = document.getElementById('slides-container');
 const dotsContainer = document.getElementById('pagination-dots');
 const prevBtn = document.getElementById('prev-slide');
 const nextBtn = document.getElementById('next-slide');
 
-function initSlider() {
-    // Generate Slide HTML
-    slideData.forEach((slide, index) => {
-        // Create Slide Element
-        const slideEl = document.createElement('div');
-        slideEl.classList.add('absolute', 'inset-0', 'w-full', 'h-full', 'transition-opacity', 'duration-700', 'ease-in-out');
-        
-        if (index === 0) {
-            slideEl.classList.add('opacity-100', 'z-10');
-        } else {
-            slideEl.classList.add('opacity-0', 'z-0');
-        }
 
+if (menuBtn) {
+    menuBtn.addEventListener('click', () => {
+        const isMenuOpen = !mobileMenu.classList.contains('hidden');
+
+        if (isMenuOpen) {
+            mobileMenu.classList.add('hidden');
+            mobileMenu.classList.remove('flex');
+            hamburgerIcon.classList.remove('hidden');
+            closeIcon.classList.add('hidden');
+        } else {
+            mobileMenu.classList.remove('hidden');
+            mobileMenu.classList.add('flex');
+            hamburgerIcon.classList.add('hidden');
+            closeIcon.classList.remove('hidden');
+        }
+    });
+}
+
+/* ==========================================================================
+   4. HERO SLIDER MODULE
+   ========================================================================== */
+function initSlider() {
+    if (!slidesContainer || !dotsContainer) return;
+
+    slideData.forEach((slide, index) => {
+        const slideEl = document.createElement('div');
+        slideEl.className = `absolute inset-0 w-full h-full transition-opacity duration-700 ease-in-out ${
+            index === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0'
+        }`;
         slideEl.id = `slide-${index}`;
 
         slideEl.innerHTML = `
-            <!-- Background Image (Cover) -->
             <img src="${slide.image}" alt="${slide.title}" class="absolute inset-0 w-full h-full object-cover">
-            
-            <!-- Dark Overlay for Readability -->
             <div class="absolute inset-0 bg-slate-900/50"></div>
-
-            <!-- Text Content (Centered Content Container) -->
             <div class="relative z-10 container mx-auto h-full flex items-center px-10 md:px-20">
                 <div class="max-w-2xl text-white">
                     <h2 class="text-5xl md:text-6xl font-extrabold tracking-tight mb-5 leading-tight">${slide.title}</h2>
@@ -86,31 +88,22 @@ function initSlider() {
         `;
         slidesContainer.appendChild(slideEl);
 
-        // Pagination Dot Element
         const dotEl = document.createElement('button');
-        dotEl.classList.add('size-3', 'rounded-full', 'border-2', 'border-white/70', 'transition-all', 'duration-300', 'focus:outline-none', 'focus:ring-2', 'focus:ring-white');
+        dotEl.className = `size-3 rounded-full border-2 border-white/70 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white ${
+            index === 0 ? 'bg-white scale-110' : 'bg-transparent'
+        }`;
         dotEl.setAttribute('aria-label', `Go to slide ${index + 1}`);
-        
-        // Set Active Dot State
-        if (index === 0) {
-            dotEl.classList.add('bg-white', 'scale-110');
-        } else {
-            dotEl.classList.add('bg-transparent');
-        }
 
-        // Dot Click Event
         dotEl.addEventListener('click', () => {
             goToSlide(index);
-            resetAutoPlay(); // Stop automatic switching when user interacts
+            resetAutoPlay();
         });
 
         dotsContainer.appendChild(dotEl);
     });
 }
 
-        // Switch Active States for Slides and Dots
 function updateDOM() {
-    // Update Slides Opacity
     const allSlides = slidesContainer.querySelectorAll('[id^="slide-"]');
     allSlides.forEach((slide, index) => {
         if (index === currentIndex) {
@@ -122,7 +115,6 @@ function updateDOM() {
         }
     });
 
-    // Update Dots Background Color
     const allDots = dotsContainer.querySelectorAll('button');
     allDots.forEach((dot, index) => {
         if (index === currentIndex) {
@@ -135,12 +127,10 @@ function updateDOM() {
     });
 }
 
-
 function goToSlide(index) {
     currentIndex = index;
     updateDOM();
 }
-
 
 function nextSlide() {
     currentIndex = (currentIndex + 1) % slideData.length;
@@ -148,48 +138,32 @@ function nextSlide() {
 }
 
 function prevSlide() {
-    // Decrement index, but if it goes below 0, wrap around to the end
     currentIndex = (currentIndex - 1 + slideData.length) % slideData.length;
     updateDOM();
 }
 
-// E. Auto-Play Utility
 function startAutoPlay() {
     slideInterval = setInterval(nextSlide, 8000);
 }
 
 function resetAutoPlay() {
-    clearInterval(slideInterval); 
-    startAutoPlay(); 
+    clearInterval(slideInterval);
+    startAutoPlay();
 }
 
-nextBtn.addEventListener('click', () => {
-    nextSlide();
-    resetAutoPlay();
-});
-
-prevBtn.addEventListener('click', () => {
-    prevSlide();
-    resetAutoPlay();
-});
-
-
-
-
-const APIURL = 'https://api.escuelajs.co/api/v1/products';
+if (nextBtn && prevBtn) {
+    nextBtn.addEventListener('click', () => { nextSlide(); resetAutoPlay(); });
+    prevBtn.addEventListener('click', () => { prevSlide(); resetAutoPlay(); });
+}
 
 function getSkeletonCardsHTML(count = 8) {
     return Array(count).fill(0).map(() => `
         <div class="bg-white rounded-2xl p-4 border border-gray-200 shadow-sm animate-pulse flex flex-col justify-between">
             <div>
-                <!-- Image Placeholder -->
                 <div class="aspect-square bg-slate-200 rounded-xl mb-4"></div>
-                <!-- Title Placeholder -->
                 <div class="h-4 bg-slate-200 rounded-md w-3/4 mb-2"></div>
-                <!-- Category/Subtext Placeholder -->
                 <div class="h-3 bg-slate-200 rounded-md w-1/2 mb-4"></div>
             </div>
-            <!-- Price and Button Row Placeholder -->
             <div class="flex items-center justify-between pt-2">
                 <div class="h-5 bg-slate-200 rounded-md w-16"></div>
                 <div class="h-8 bg-slate-200 rounded-full w-24"></div>
@@ -207,40 +181,13 @@ function getErrorHTML(message = 'Failed loading products.') {
             <p class="text-slate-800 font-semibold mb-1">${message}</p>
             <p class="text-slate-500 text-sm mb-4">Please check your connection or try again later.</p>
             <button 
-                onclick="getData(0, 8)" 
+                onclick="getData(selectedCategoryId, 0, 8)" 
                 class="inline-flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white text-sm font-semibold px-4 py-2 rounded-full transition-all active:scale-95 shadow-sm"
             >
-                <svg class="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
-                </svg>
                 Retry
             </button>
         </div>
     `;
-}
-
-async function getData(offset = 0, limit = 8) {
-    const productsContainer = document.getElementById('featured-products');
-
-    // 1. SHOW SKELETON LOADERS IMMEDIATELY
-    productsContainer.innerHTML = getSkeletonCardsHTML(limit);
-
-    try {
-        const response = await fetch(`${APIURL}?offset=${offset}&limit=${limit}`);
-        
-        if (!response.ok) {
-            throw new Error(`Server returned status ${response.status}`);
-        }
-
-        const products = await response.json();
-
-        renderProducts(products, productsContainer);
-
-    } catch (error) {
-        console.error('Error fetching products:', error);
-        
-        productsContainer.innerHTML = getErrorHTML('Unable to load product catalog');
-    }
 }
 
 function renderProducts(products, container) {
@@ -254,9 +201,9 @@ function renderProducts(products, container) {
     }
 
     const productCardsHTML = products.map(product => {
-        // Sanitize API image string format
         let imageUrl = product.images && product.images.length > 0 ? product.images[1] : '';
-        if (typeof imageUrl === 'string' && (imageUrl.startsWith('["') || imageUrl.startsWith('["'))) {
+        
+        if (typeof imageUrl === 'string' && imageUrl.startsWith('["')) {
             imageUrl = imageUrl.replace(/^\["|"\]$/g, '');
         }
 
@@ -268,7 +215,6 @@ function renderProducts(products, container) {
                             src="${imageUrl}" 
                             alt="${product.title}" 
                             class="w-full h-full object-cover product_image"
-                            
                             loading="lazy"
                         >
                     </div>
@@ -297,8 +243,98 @@ function renderProducts(products, container) {
 
     container.innerHTML = productCardsHTML;
 }
-// imageEror: // onerror="this.src='https://placehold.co/400x400?text=No+Image'"
-getData(0, 8);
 
-initSlider(); 
-startAutoPlay();
+async function getData(categoryId = null, offset = 0, limit = 8) {
+    const productsContainer = document.getElementById('featured-products');
+    if (!productsContainer) return;
+
+    productsContainer.innerHTML = getSkeletonCardsHTML(limit);
+
+    try {
+        let endpoint = `${APIURL}?offset=${offset}&limit=${limit}`;
+        if (categoryId !== null) {
+            endpoint = `${APIURL}/?categoryId=${categoryId}&offset=${offset}&limit=${limit}`;
+        }
+
+        const response = await fetch(endpoint);
+        if (!response.ok) throw new Error(`Server status ${response.status}`);
+
+        const products = await response.json();
+        renderProducts(products, productsContainer);
+
+    } catch (error) {
+        console.error('Error fetching products:', error);
+        productsContainer.innerHTML = getErrorHTML('Unable to load product catalog');
+    }
+}
+
+async function initCategories() {
+    const categoryContainer = document.getElementById('category-filters');
+    if (!categoryContainer) return;
+
+    try {
+        const response = await fetch(`${CATEGORIES_URL}?limit=5`);
+        if (!response.ok) throw new Error('Failed loading categories');
+
+        const categories = await response.json();
+        const allCategories = [{ id: null, name: 'All' }, ...categories];
+
+        renderCategoryButtons(allCategories, categoryContainer);
+    } catch (error) {
+        console.error('Category load error:', error);
+        renderCategoryButtons([{ id: null, name: 'All' }], categoryContainer);
+    }
+}
+
+function renderCategoryButtons(categories, container) {
+    container.innerHTML = categories.map(cat => {
+        const isAll = cat.id === null;
+        const isActive = selectedCategoryId === cat.id;
+
+        const baseClasses = "px-4 py-2 rounded-full text-sm font-semibold whitespace-nowrap transition-all duration-300 ease-in-out cursor-pointer select-none border";
+        const activeClasses = isActive 
+            ? "bg-slate-900 text-white border-slate-900 shadow-sm scale-105" 
+            : "bg-white text-slate-600 border-gray-200 hover:bg-slate-100 hover:text-slate-900";
+
+        return `
+            <button 
+                data-category-id="${isAll ? 'all' : cat.id}"
+                class="category-btn ${baseClasses} ${activeClasses}"
+            >
+                ${cat.name}
+            </button>
+        `;
+    }).join('');
+
+    container.addEventListener('click', handleCategoryClick);
+}
+
+function handleCategoryClick(event) {
+    const target = event.target.closest('.category-btn');
+    if (!target) return;
+
+    const catAttr = target.getAttribute('data-category-id');
+    const newCategoryId = catAttr === 'all' ? null : Number(catAttr);
+
+    if (newCategoryId === selectedCategoryId) return;
+
+    selectedCategoryId = newCategoryId;
+
+    document.querySelectorAll('.category-btn').forEach(btn => {
+        btn.classList.remove('bg-slate-900', 'text-white', 'border-slate-900', 'shadow-sm', 'scale-105');
+        btn.classList.add('bg-white', 'text-slate-600', 'border-gray-200', 'hover:bg-slate-100', 'hover:text-slate-900');
+    });
+
+    target.classList.remove('bg-white', 'text-slate-600', 'border-gray-200', 'hover:bg-slate-100', 'hover:text-slate-900');
+    target.classList.add('bg-slate-900', 'text-white', 'border-slate-900', 'shadow-sm', 'scale-105');
+
+    getData(selectedCategoryId, 0, 8);
+}
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    initSlider();
+    startAutoPlay();
+    initCategories();
+    getData(null, 0, 8); 
+});
