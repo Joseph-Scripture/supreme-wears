@@ -116,6 +116,10 @@ function attachCartEventListeners() {
         }
     });
 }
+const checkoutBtn = document.querySelector('.checkout');
+checkoutBtn.addEventListener('click', () => {
+    window.location.href='checkout.html';
+})
 
 document.addEventListener('DOMContentLoaded', () => {
     updateCartBadge();

@@ -1,8 +1,5 @@
 const CART_STORAGE_KEY = 'supreme_wears_cart';
 
-/**
- * Safely parse cart data from LocalStorage
- */
 export function getCart() {
     try {
         const storedCart = localStorage.getItem(CART_STORAGE_KEY);
@@ -14,25 +11,17 @@ export function getCart() {
     }
 }
 
-/**
- * Persist cart array and notify count badges
- */
+
 export function saveCart(cart) {
     localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
     updateCartBadge();
 }
 
-/**
- * Clean image string returned by Fake Store API
- */
+
 function cleanImageUrl(imgSource) {
     if (!imgSource) return '';
     return typeof imgSource === 'string' ? imgSource : '';
 }
-
-/**
- * Add or increment item in store
- */
 export function addToCart(product, quantityToAdd = 1) {
     if (!product || quantityToAdd < 1) return;
 
@@ -60,18 +49,13 @@ export function addToCart(product, quantityToAdd = 1) {
     saveCart(cart);
 }
 
-/**
- * Remove product from store by ID
- */
+
 export function removeFromCart(productId) {
     let cart = getCart();
     cart = cart.filter(item => String(item.id) !== String(productId));
     saveCart(cart);
 }
 
-/**
- * Update absolute item quantity
- */
 export function updateQuantity(productId, newQuantity) {
     if (newQuantity <= 0) {
         removeFromCart(productId);
@@ -86,9 +70,6 @@ export function updateQuantity(productId, newQuantity) {
     }
 }
 
-/**
- * Return calculated financial metrics
- */
 export function getCartTotals() {
     const cart = getCart();
     const subtotal = cart.reduce((sum, item) => sum + (Number(item.price) * item.quantity), 0);
@@ -96,9 +77,6 @@ export function getCartTotals() {
     return { subtotal, itemCount };
 }
 
-/**
- * Sync badge counts across all active page headers
- */
 export function updateCartBadge() {
     const { itemCount } = getCartTotals();
     const badgeElements = document.querySelectorAll('.cart-count-badge');
@@ -106,10 +84,10 @@ export function updateCartBadge() {
         badge.textContent = itemCount;
     });
 }
+export function clearCart(){
 
-/**
- * Non-blocking toast banner display handler
- */
+}
+
 let toastTimer = null;
 
 export function showToast(message = 'Item added to cart!') {
