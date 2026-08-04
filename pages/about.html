@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="../styles/index.css">
+    <title>About Us | Supreme Wears</title>
+</head>
+
+<body class="bg-gray-50 font-sans antialiased text-slate-900 min-h-screen flex flex-col justify-between">
+
+    <!-- HEADER -->
+    <header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-gray-200/80">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <a href="../index.html" class="logo text-xl font-bold tracking-tight text-slate-900">
+                Supreme<span class="font-extrabold text-2xl text-blue-600">Wears</span>
+            </a>
+            <nav class="flex items-center gap-6">
+                <a href="../index.html" class="text-xs font-semibold text-slate-600 hover:text-blue-600 transition-colors">Home</a>
+                <a href="about.html" class="text-xs font-bold text-blue-600">About</a>
+                <a href="cart.html" class="text-xs font-semibold text-slate-600 hover:text-blue-600 transition-colors">Cart</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="max-w-4xl mx-auto text-center px-6 pt-16 pb-12">
+        <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight text-slate-900">
+            Building Quality, <span class="text-blue-600">Step by Step</span>
+        </h1>
+        <p class="mt-4 text-slate-600 text-sm md:text-base max-w-2xl mx-auto">
+            From a tiny studio setup to a functional modern apparel brand. Here is how our engineering, design, and operations evolved over the years.
+        </p>
+    </section>
+
+    <main class="max-w-5xl mx-auto px-6 pb-24 w-full flex-grow">
+        
+        <div class="relative flex flex-col items-center">
+            
+            <div class="hidden md:block absolute top-0 bottom-0 w-1 bg-gradient-to-b from-blue-600 via-slate-300 to-slate-900 rounded-full"></div>
+
+            <!-- STEP 1: 2021 (Top Step - Left Aligned) -->
+            <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-8 items-center mb-12 md:mb-16 relative">
+                <div class="md:text-right space-y-2 md:pr-10">
+                    <span class="inline-block px-3 py-1 bg-blue-100 text-blue-700 text-xs font-black rounded-full uppercase tracking-wider">2021 &bull; Step 01</span>
+                    <h3 class="text-xl font-extrabold text-slate-900">Foundations & First Prototype</h3>
+                    <p class="text-xs md:text-sm text-slate-600 leading-relaxed">
+                        Supreme Wears launched as a small side project focusing on custom-fit essentials. We started with just 5 core designs, testing materials for durability and comfort under rigorous everyday use.
+                    </p>
+                </div>
+                
+                <!-- Step Connector Badge -->
+                <div class="hidden md:flex absolute left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-blue-600 border-4 border-white shadow-md items-center justify-center text-white text-xs font-bold">1</div>
+                
+                <div class="md:pl-10">
+                    <div class="bg-white p-6 rounded-2xl border border-gray-200/80 shadow-xs hover:border-blue-500 transition-all">
+                        <div class="text-xs font-bold text-slate-400 uppercase tracking-widest">Milestone</div>
+                        <div class="text-sm font-semibold text-slate-800 mt-1">First 1,000 orders shipped directly from our primary workspace.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STEP 2: 2022 (Step 02 - Right Aligned Offset) -->
+            <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-8 items-center mb-12 md:mb-16 relative">
+                <div class="order-2 md:order-1 md:pr-10">
+                    <div class="bg-white p-6 rounded-2xl border border-gray-200/80 shadow-xs hover:border-blue-500 transition-all">
+                        <div class="text-xs font-bold text-slate-400 uppercase tracking-widest">Milestone</div>
+                        <div class="text-sm font-semibold text-slate-800 mt-1">Engineered custom fabric blends to eliminate shrinking and fading.</div>
+                    </div>
+                </div>
+
+                <!-- Step Connector Badge -->
+                <div class="hidden md:flex absolute left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-slate-800 border-4 border-white shadow-md items-center justify-center text-white text-xs font-bold">2</div>
+
+                <div class="order-1 md:order-2 space-y-2 md:pl-10">
+                    <span class="inline-block px-3 py-1 bg-slate-100 text-slate-700 text-xs font-black rounded-full uppercase tracking-wider">2022 &bull; Step 02</span>
+                    <h3 class="text-xl font-extrabold text-slate-900">Material Standard Optimization</h3>
+                    <p class="text-xs md:text-sm text-slate-600 leading-relaxed">
+                        We phased out third-party blank shirts and partnered directly with certified textile mills. Every garment was redesigned to meet strict structural and stitching standards.
+                    </p>
+                </div>
+            </div>
+
+            <!-- STEP 3: 2024 (Step 03 - Left Aligned Offset) -->
+            <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-8 items-center mb-12 md:mb-16 relative">
+                <div class="md:text-right space-y-2 md:pr-10">
+                    <span class="inline-block px-3 py-1 bg-blue-100 text-blue-700 text-xs font-black rounded-full uppercase tracking-wider">2024 &bull; Step 03</span>
+                    <h3 class="text-xl font-extrabold text-slate-900">Digital Storefront & API Integration</h3>
+                    <p class="text-xs md:text-sm text-slate-600 leading-relaxed">
+                        Rebuilt our web architecture into a fast, lightweight SPA setup. Integrated dynamic API catalog feeds, real-time client-side cart updates, and zero-latency checkout flows.
+                    </p>
+                </div>
+
+                <!-- Step Connector Badge -->
+                <div class="hidden md:flex absolute left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-blue-600 border-4 border-white shadow-md items-center justify-center text-white text-xs font-bold">3</div>
+
+                <div class="md:pl-10">
+                    <div class="bg-white p-6 rounded-2xl border border-gray-200/80 shadow-xs hover:border-blue-500 transition-all">
+                        <div class="text-xs font-bold text-slate-400 uppercase tracking-widest">Milestone</div>
+                        <div class="text-sm font-semibold text-slate-800 mt-1">Achieved sub-second page loads and automated inventory syncing.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STEP 4: 2026 (Bottom Step - Present Day) -->
+            <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-8 items-center relative">
+                <div class="order-2 md:order-1 md:pr-10">
+                    <div class="bg-slate-900 text-white p-6 rounded-2xl border border-slate-800 shadow-md">
+                        <div class="text-xs font-bold text-blue-400 uppercase tracking-widest">Current Focus</div>
+                        <div class="text-sm font-semibold mt-1">Expanding modular streetwear catalog & eco-friendly distribution networks.</div>
+                    </div>
+                </div>
+
+                <!-- Step Connector Badge -->
+                <div class="hidden md:flex absolute left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-emerald-500 border-4 border-white shadow-md items-center justify-center text-white text-xs font-bold">4</div>
+
+                <div class="order-1 md:order-2 space-y-2 md:pl-10">
+                    <span class="inline-block px-3 py-1 bg-emerald-100 text-emerald-800 text-xs font-black rounded-full uppercase tracking-wider">2026 &bull; Step 04 (Present)</span>
+                    <h3 class="text-xl font-extrabold text-slate-900">Scalable Production & Beyond</h3>
+                    <p class="text-xs md:text-sm text-slate-600 leading-relaxed">
+                        Today, Supreme Wears operates as a fully streamlined apparel platform. We combine engineering logic with high-grade manufacturing to deliver long-lasting apparel without unnecessary overhead.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="border-t border-gray-200 bg-white py-6 text-center text-xs text-slate-500">
+        &copy; 2026 Supreme Wears. Built with intent.
+    </footer>
+
+</body>
+</html>
